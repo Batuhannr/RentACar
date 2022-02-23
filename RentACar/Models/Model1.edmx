@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RentACarDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Araclar">
+          <Key>
+            <PropertyRef Name="AracId" />
+          </Key>
+          <Property Name="AracId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AracPlaka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AracMarka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AracModel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AracUretimTarihi" Type="datetime" Nullable="false" />
+          <Property Name="AracGunlukFiyat" Type="money" Nullable="false" />
+          <Property Name="AracKullanilabilir" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriTc" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="MusteriTel" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="MusteriEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriAdresIlk" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="MusteriAdresIkinci" Type="nvarchar" MaxLength="80" />
+          <Property Name="MusteriRezSay" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rezervasyon">
+          <Key>
+            <PropertyRef Name="RezId" />
+          </Key>
+          <Property Name="RezId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RezTarih" Type="datetime" Nullable="false" />
+          <Property Name="RezBaslangic" Type="datetime" Nullable="false" />
+          <Property Name="RezBitis" Type="datetime" Nullable="false" />
+          <Property Name="RezAracId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RezMusteriId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RezIslemYapan" Type="int" Nullable="false" />
+          <Property Name="RezGunSayisi" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uyeler">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="int" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UyeAdmin" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Rezervasyon_ToAraclar">
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Araclar">
+              <PropertyRef Name="AracId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezAracId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezervasyon_ToMusteri">
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezMusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezervasyon_ToUyeler">
+          <End Role="Uyeler" Type="Self.Uyeler" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uyeler">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezIslemYapan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RentACarDatabaseModelStoreContainer">
+          <EntitySet Name="Araclar" EntityType="Self.Araclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteri" EntityType="Self.Musteri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rezervasyon" EntityType="Self.Rezervasyon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uyeler" EntityType="Self.Uyeler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Rezervasyon_ToAraclar" Association="Self.FK_Rezervasyon_ToAraclar">
+            <End Role="Araclar" EntitySet="Araclar" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezervasyon_ToMusteri" Association="Self.FK_Rezervasyon_ToMusteri">
+            <End Role="Musteri" EntitySet="Musteri" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezervasyon_ToUyeler" Association="Self.FK_Rezervasyon_ToUyeler">
+            <End Role="Uyeler" EntitySet="Uyeler" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RentACarDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Araclar">
+          <Key>
+            <PropertyRef Name="AracId" />
+          </Key>
+          <Property Name="AracId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AracPlaka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AracMarka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AracModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AracUretimTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AracGunlukFiyat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AracKullanilabilir" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rezervasyons" Relationship="Self.FK_Rezervasyon_ToAraclar" FromRole="Araclar" ToRole="Rezervasyon" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriTc" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriTel" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriAdresIlk" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusteriAdresIkinci" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="MusteriRezSay" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rezervasyons" Relationship="Self.FK_Rezervasyon_ToMusteri" FromRole="Musteri" ToRole="Rezervasyon" />
+        </EntityType>
+        <EntityType Name="Rezervasyon">
+          <Key>
+            <PropertyRef Name="RezId" />
+          </Key>
+          <Property Name="RezId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RezTarih" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RezBaslangic" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RezBitis" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RezAracId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RezMusteriId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RezIslemYapan" Type="Int32" Nullable="false" />
+          <Property Name="RezGunSayisi" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Araclar" Relationship="Self.FK_Rezervasyon_ToAraclar" FromRole="Rezervasyon" ToRole="Araclar" />
+          <NavigationProperty Name="Musteri" Relationship="Self.FK_Rezervasyon_ToMusteri" FromRole="Rezervasyon" ToRole="Musteri" />
+          <NavigationProperty Name="Uyeler" Relationship="Self.FK_Rezervasyon_ToUyeler" FromRole="Rezervasyon" ToRole="Uyeler" />
+        </EntityType>
+        <EntityType Name="Uyeler">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="Int32" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UyeAdmin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rezervasyons" Relationship="Self.FK_Rezervasyon_ToUyeler" FromRole="Uyeler" ToRole="Rezervasyon" />
+        </EntityType>
+        <Association Name="FK_Rezervasyon_ToAraclar">
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Araclar">
+              <PropertyRef Name="AracId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezAracId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezervasyon_ToMusteri">
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezMusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezervasyon_ToUyeler">
+          <End Role="Uyeler" Type="Self.Uyeler" Multiplicity="1" />
+          <End Role="Rezervasyon" Type="Self.Rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uyeler">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="Rezervasyon">
+              <PropertyRef Name="RezIslemYapan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RentACarDatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Araclars" EntityType="Self.Araclar" />
+          <EntitySet Name="Musteris" EntityType="Self.Musteri" />
+          <EntitySet Name="Rezervasyons" EntityType="Self.Rezervasyon" />
+          <EntitySet Name="Uyelers" EntityType="Self.Uyeler" />
+          <AssociationSet Name="FK_Rezervasyon_ToAraclar" Association="Self.FK_Rezervasyon_ToAraclar">
+            <End Role="Araclar" EntitySet="Araclars" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezervasyon_ToMusteri" Association="Self.FK_Rezervasyon_ToMusteri">
+            <End Role="Musteri" EntitySet="Musteris" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezervasyon_ToUyeler" Association="Self.FK_Rezervasyon_ToUyeler">
+            <End Role="Uyeler" EntitySet="Uyelers" />
+            <End Role="Rezervasyon" EntitySet="Rezervasyons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RentACarDatabaseModelStoreContainer" CdmEntityContainer="RentACarDatabaseEntities1">
+          <EntitySetMapping Name="Araclars">
+            <EntityTypeMapping TypeName="RentACarDatabaseModel.Araclar">
+              <MappingFragment StoreEntitySet="Araclar">
+                <ScalarProperty Name="AracId" ColumnName="AracId" />
+                <ScalarProperty Name="AracPlaka" ColumnName="AracPlaka" />
+                <ScalarProperty Name="AracMarka" ColumnName="AracMarka" />
+                <ScalarProperty Name="AracModel" ColumnName="AracModel" />
+                <ScalarProperty Name="AracUretimTarihi" ColumnName="AracUretimTarihi" />
+                <ScalarProperty Name="AracGunlukFiyat" ColumnName="AracGunlukFiyat" />
+                <ScalarProperty Name="AracKullanilabilir" ColumnName="AracKullanilabilir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteris">
+            <EntityTypeMapping TypeName="RentACarDatabaseModel.Musteri">
+              <MappingFragment StoreEntitySet="Musteri">
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+                <ScalarProperty Name="MusteriAd" ColumnName="MusteriAd" />
+                <ScalarProperty Name="MusteriSoyad" ColumnName="MusteriSoyad" />
+                <ScalarProperty Name="MusteriTc" ColumnName="MusteriTc" />
+                <ScalarProperty Name="MusteriTel" ColumnName="MusteriTel" />
+                <ScalarProperty Name="MusteriEmail" ColumnName="MusteriEmail" />
+                <ScalarProperty Name="MusteriAdresIlk" ColumnName="MusteriAdresIlk" />
+                <ScalarProperty Name="MusteriAdresIkinci" ColumnName="MusteriAdresIkinci" />
+                <ScalarProperty Name="MusteriRezSay" ColumnName="MusteriRezSay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rezervasyons">
+            <EntityTypeMapping TypeName="RentACarDatabaseModel.Rezervasyon">
+              <MappingFragment StoreEntitySet="Rezervasyon">
+                <ScalarProperty Name="RezId" ColumnName="RezId" />
+                <ScalarProperty Name="RezTarih" ColumnName="RezTarih" />
+                <ScalarProperty Name="RezBaslangic" ColumnName="RezBaslangic" />
+                <ScalarProperty Name="RezBitis" ColumnName="RezBitis" />
+                <ScalarProperty Name="RezAracId" ColumnName="RezAracId" />
+                <ScalarProperty Name="RezMusteriId" ColumnName="RezMusteriId" />
+                <ScalarProperty Name="RezIslemYapan" ColumnName="RezIslemYapan" />
+                <ScalarProperty Name="RezGunSayisi" ColumnName="RezGunSayisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uyelers">
+            <EntityTypeMapping TypeName="RentACarDatabaseModel.Uyeler">
+              <MappingFragment StoreEntitySet="Uyeler">
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="UyeAdmin" ColumnName="UyeAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
