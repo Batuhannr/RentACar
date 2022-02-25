@@ -169,6 +169,19 @@ namespace RentACar.Controllers
             kayit.AracModel = model.AracModel;
             kayit.AracPlaka = model.AracPlaka;
             kayit.AracUretimTarihi = model.AracUretimTarihi;
+
+            AracDetay aracdet = db.AracDetays.Where(s => s.AracDetayAracId == kayit.AracId).FirstOrDefault();
+
+            aracdet.AracAlimYili = model.AracDetayBilgi.AracAlimYili;
+            aracdet.AracKasaTipi = model.AracDetayBilgi.AracKasaTipi;
+            aracdet.AracKm = model.AracDetayBilgi.AracKm;
+            aracdet.AracKoltukSayisi= model.AracDetayBilgi.AracKoltukSayisi;
+            aracdet.AracMotorGucu = model.AracDetayBilgi.AracMotorGucu;
+            aracdet.AracMotorHacmi = model.AracDetayBilgi.AracMotorHacmi;
+            aracdet.AracRenk = model.AracDetayBilgi.AracRenk;
+            aracdet.AracTuru= model.AracDetayBilgi.AracTuru;
+            aracdet.AracVitesTipi= model.AracDetayBilgi.AracVitesTipi;
+            aracdet.AracYakitTipi = model.AracDetayBilgi.AracYakitTipi;
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Araç Düzenlendi";
@@ -186,12 +199,16 @@ namespace RentACar.Controllers
                 sonuc.mesaj = "Araç Bulunamadı";
                 return sonuc;
             }
+            AracDetay aracdet = db.AracDetays.Where(s => s.AracDetayAracId == kayit.AracId).FirstOrDefault();
+            db.AracDetays.Remove(aracdet);
             db.Araclars.Remove(kayit);
             db.SaveChanges();
             sonuc.islem = true;
             sonuc.mesaj = "Araç Silindi";
             return sonuc;
         }
+
+
 
 
         #endregion
