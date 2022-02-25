@@ -28,6 +28,7 @@ namespace RentACar.Models
         public decimal AracGunlukFiyat { get; set; }
         public int AracKullanilabilir { get; set; }
     
+        public virtual AracDetay AracDetay { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rezervasyon> Rezervasyons { get; set; }
     }

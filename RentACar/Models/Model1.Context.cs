@@ -25,6 +25,7 @@ namespace RentACar.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AracDetay> AracDetays { get; set; }
         public virtual DbSet<Araclar> Araclars { get; set; }
         public virtual DbSet<Musteri> Musteris { get; set; }
         public virtual DbSet<Rezervasyon> Rezervasyons { get; set; }

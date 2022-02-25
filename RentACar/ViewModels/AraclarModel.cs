@@ -14,5 +14,6 @@ namespace RentACar.ViewModels
         public DateTime AracUretimTarihi { get; set; }
         public decimal AracGunlukFiyat { get; set; }
         public int AracKullanilabilir { get; set; }
+        public AracDetayModel AracDetayBilgi { get; set; }
     }
 }

@@ -5,13 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f77523e4e3964d56835b96a73c29974d" Name="Diagram1">
-        <EntityTypeShape EntityType="RentACarDatabaseModel.Araclar" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentACarDatabaseModel.Musteri" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentACarDatabaseModel.Rezervasyon" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentACarDatabaseModel.Uyeler" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
-        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToAraclar" ManuallyRouted="false" />
-        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToMusteri" ManuallyRouted="false" />
-        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToUyeler" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RentACarDatabaseModel.AracDetay" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="RentACarDatabaseModel.Araclar" Width="1.5" PointX="0.75" PointY="4.375" />
+        <EntityTypeShape EntityType="RentACarDatabaseModel.Musteri" Width="1.5" PointX="3.75" PointY="8.875" />
+        <EntityTypeShape EntityType="RentACarDatabaseModel.Rezervasyon" Width="1.5" PointX="6" PointY="4.125" />
+        <EntityTypeShape EntityType="RentACarDatabaseModel.Uyeler" Width="1.5" PointX="3.75" PointY="0.75" />
+        <AssociationConnector Association="RentACarDatabaseModel.FK_Araclar_ToAracDetay" />
+        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToAraclar" />
+        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToMusteri" />
+        <AssociationConnector Association="RentACarDatabaseModel.FK_Rezervasyon_ToUyeler" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -13,8 +13,9 @@ namespace RentACar.ViewModels
         public DateTime RezBitis { get; set; }
         public string RezAracId { get; set; }   
         public string RezMusteriId { get; set; }
-        public string RezIslemYapan { get; set; }
+        public int RezIslemYapan { get; set; }
         public int RezGunSayisi { get; set; }
+        public decimal RezTutar { get; set; }
 
         public MusterilerModel musteriBilgi { get; set; }
         public AraclarModel aracBilgi { get; set; }

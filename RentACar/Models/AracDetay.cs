@@ -12,20 +12,20 @@ namespace RentACar.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Rezervasyon
+    public partial class AracDetay
     {
-        public string RezId { get; set; }
-        public System.DateTime RezTarih { get; set; }
-        public System.DateTime RezBaslangic { get; set; }
-        public System.DateTime RezBitis { get; set; }
-        public string RezAracId { get; set; }
-        public string RezMusteriId { get; set; }
-        public int RezIslemYapan { get; set; }
-        public int RezGunSayisi { get; set; }
-        public decimal RezTutar { get; set; }
+        public string AracDetayAracId { get; set; }
+        public int AracKm { get; set; }
+        public System.DateTime AracAlimYili { get; set; }
+        public int AracKoltukSayisi { get; set; }
+        public string AracYakitTipi { get; set; }
+        public string AracVitesTipi { get; set; }
+        public string AracRenk { get; set; }
+        public string AracMotorGucu { get; set; }
+        public string AracMotorHacmi { get; set; }
+        public string AracKasaTipi { get; set; }
+        public string AracTuru { get; set; }
     
         public virtual Araclar Araclar { get; set; }
-        public virtual Musteri Musteri { get; set; }
-        public virtual Uyeler Uyeler { get; set; }
     }
 }
